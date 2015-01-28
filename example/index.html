@@ -1,4 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Essencially</title>
+      <link href="plugins/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+      <link href="css/animate.min.css" rel="stylesheet"/>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+      <script src="plugins/pace/pace.min.js" type="text/javascript"></script>
+      <script src="plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
+      <script src="plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
+      <script src="plugins/jquery-ricksaw-chart/js/d3.v2.js"></script>
+      <script src="plugins/jquery-ricksaw-chart/js/rickshaw.min.js"></script>
+      <script src="plugins/jquery-morris-chart/js/morris.min.js"></script>
+      <script src="plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js"></script>
+      <script src="plugins/jquery-flot/jquery.flot.js"></script>
+      <script src="plugins/jquery-flot/jquery.flot.time.min.js"></script>
+      <script src="plugins/jquery-flot/jquery.flot.selection.min.js"></script>
+      <script src="plugins/jquery-flot/jquery.flot.animator.min.js"></script>
+      <script src="plugins/jquery-flot/jquery.flot.orderBars.js"></script>
+      <script src="plugins/jquery-sparkline/jquery-sparkline.js"></script>
+      <script src="plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js"></script>
 
+        </head>
+        <body class="">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="grid simple">
@@ -35,3 +58,206 @@
                         </div>
                     </div>
                 </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var graph_today = [{
+                    y: '2006',
+                    a: 50,
+                    b: 40
+                }, {
+                    y: '2007',
+                    a: 65,
+                    b: 55
+                }, {
+                    y: '2008',
+                    a: 50,
+                    b: 40
+                }, {
+                    y: '2009',
+                    a: 75,
+                    b: 65
+                }, {
+                    y: '2010',
+                    a: 50,
+                    b: 40
+                }, {
+                    y: '2011',
+                    a: 75,
+                    b: 65
+                }, {
+                    y: '2012',
+                    a: 100,
+                    b: 90
+                }];
+
+            var graph_last_week = [{
+                    y: '2006',
+                    a: 350,
+                    b: 240
+                }, {
+                    y: '2007',
+                    a: 765,
+                    b: 555
+                }, {
+                    y: '2008',
+                    a: 350,
+                    b: 240
+                }, {
+                    y: '2009',
+                    a: 675,
+                    b: 965
+                }, {
+                    y: '2010',
+                    a: 650,
+                    b: 840
+                }, {
+                    y: '2011',
+                    a: 675,
+                    b: 465
+                }, {
+                    y: '2012',
+                    a: 3100,
+                    b: 190
+                }];
+
+            var graph_last_month = [{
+                    y: '2006',
+                    a: 3350,
+                    b: 6240
+                }, {
+                    y: '2007',
+                    a: 4765,
+                    b: 2555
+                }, {
+                    y: '2008',
+                    a: 5350,
+                    b: 3240
+                }, {
+                    y: '2009',
+                    a: 3675,
+                    b: 4965
+                }, {
+                    y: '2010',
+                    a: 5650,
+                    b: 7840
+                }, {
+                    y: '2011',
+                    a: 4675,
+                    b: 5465
+                }, {
+                    y: '2012',
+                    a: 3100,
+                    b: 8190
+                }];
+
+
+            var Render_Graph_Morris = Morris.Line({
+                element: 'line-example',
+                data: graph_today,
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Marcela Tavares', 'Aline Gomes'],
+                lineColors: ['#0aa699', '#d1dade']
+            });
+
+
+            Morris.Area({
+                element: 'area-example',
+                data: [{
+                        y: '2006',
+                        a: 100,
+                        b: 90
+                    }, {
+                        y: '2007',
+                        a: 75,
+                        b: 65
+                    }, {
+                        y: '2008',
+                        a: 50,
+                        b: 40
+                    }, {
+                        y: '2009',
+                        a: 75,
+                        b: 65
+                    }, {
+                        y: '2010',
+                        a: 50,
+                        b: 40
+                    }, {
+                        y: '2011',
+                        a: 75,
+                        b: 65
+                    }, {
+                        y: '2012',
+                        a: 100,
+                        b: 90
+                    }],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Pagas', 'Pendente'],
+                lineColors: ['#05720f', '#ff0000'],
+                lineWidth: '0',
+                grid: 'false',
+                fillOpacity: '0.5'
+            });
+
+
+            //Update the charts
+            $('.js_update').on('click', function () {
+                var value = $(this).attr('data-filter');
+                if (value == 0) {
+                    $("#line-example").empty();
+                    Morris.Line({
+                        element: 'line-example',
+                        data: graph_today,
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Marcela Tavares', 'Aline Gomes'],
+                        lineColors: ['#0aa699', '#d1dade']
+                    });
+                } else if (value == 7) {
+
+                    $("#line-example").empty();
+                    Morris.Line({
+                        element: 'line-example',
+                        data: graph_last_week,
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Marcela Tavares', 'Aline Gomes'],
+                        lineColors: ['#0aa699', '#d1dade']
+                    });
+                } else if (value == 15) {
+                    $("#line-example").empty();
+                    Morris.Line({
+                        element: 'line-example',
+                        data: [
+                            {a: 124, period: '2014-01-11', name: 'Aline Gomes'},
+                            {b: 112, period: '2014-06-20', name: 'Silvana Rosa'},
+                            {c: 106, period: '2014-12-09', name: 'Bruno Ribeiro'}
+                        ],
+                        xkey: 'period',
+                        ykeys: ['a', 'b', 'c'],
+                        labels: 'name',
+                        lineColors: ['#d3f722', '#e291d3', '#5fff4d'],
+                        xLabelFormat: function (x) {
+                            var IndexToMonth = ["Jan", "Fev", "Mai", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+                            var month = IndexToMonth[ x.getMonth() ];
+                            var year = x.getFullYear();
+                            return month + ' de ' + year;
+                        }, dateFormat: function (x) {
+                            var IndexToMonth = ["Jan", "Fev", "Mai", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+                            var month = IndexToMonth[ new Date(x).getMonth() ];
+                            var year = new Date(x).getFullYear();
+                            return month + ' de ' + year;
+                        }
+                    });
+
+
+                }
+                //alert(value);
+
+            });
+        });
+    </script>
+</body>
+</html>
