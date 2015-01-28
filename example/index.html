@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Essencially</title>
+        <title>Nice Chat Example</title>
       <link href="plugins/font-awesome/css/font-awesome.css" rel="stylesheet"/>
       <link href="css/animate.min.css" rel="stylesheet"/>
       <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -258,6 +258,82 @@
 
             });
         });
+    </script>
+    
+    <script>
+
+        /*-----------------------------------------------------------------------------------*/
+        /*	Date Range Picker
+         /*-----------------------------------------------------------------------------------*/
+        var handleDateTimePickers = function () {
+
+            $('#reportrange').daterangepicker(
+                    {
+                        startDate: moment().subtract('days', 29),
+                        endDate: moment(),
+                        showDropdowns: true,
+                        showWeekNumbers: true,
+                        timePicker: false,
+                        timePickerIncrement: 1,
+                        timePicker12Hour: true,
+                        ranges: {
+                            'Ontem': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                            'Últimos 30 dias': [moment().subtract('days', 29), moment()],
+                            'Esse mês': [moment().startOf('month'), moment().endOf('month')]
+                        },
+                        opens: 'left',
+                        buttonClasses: ['btn btn-default'],
+                        applyClass: 'btn-small btn-primary',
+                        cancelClass: 'btn-small cancel_filter',
+                        cancelId: 'cancel_filter',
+                        format: 'DD/MM/YYYY',
+                        separator: ' para ',
+                        locale: {
+                            applyLabel: 'Filtrar',
+                            cancelLabel: 'Cancelar',
+                            fromLabel: 'De',
+                            toLabel: 'Até',
+                            customRangeLabel: 'Personalizado',
+                            daysOfWeek: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            firstDay: 1
+                        }
+                    },
+            function (start, end) {
+                var options = {
+                    bg: '#0AA599'
+                };
+                var formatted_start = new Date(start).toISOString();
+                var formatted_end = new Date(end).toISOString();
+
+                var nanobar = new Nanobar(options);
+                // get data
+                nanobar.go(25);
+                // start graph
+                $.get('Data/getData.php?start=' + formatted_start + '&end=' + formatted_end, function (json_data) {
+                    nanobar.go(50);
+                    $("#line-example").empty();
+                    Morris.Line({
+                        element: 'line-example',
+                        data: json_data.data,
+                        xkey: 'y',
+                        ykeys: json_data.keys,
+                        labels: json_data.labels,
+                        lineColors: json_data.colors
+                    });
+                    $('#myModalPrev .modal-body').html(html);
+                    nanobar.go(100);
+                }, 'json');
+
+                $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+
+            }
+            );
+            //Set the initial state of the picker label
+            $('#reportrange span').html('Data');
+        };
+
+        handleDateTimePickers(); //Function to display Date Timepicker
     </script>
 </body>
 </html>
